@@ -1,0 +1,19 @@
+{
+  //语法转译器
+  //主要对javascript最新的语法糖进行编译
+  //例如let/const就可以被编译，而includes/Object.assign等并不能被编译
+  "presets": [["env", { "modules": false }], "stage-2"],
+  //插件配置
+  //transform-runtime解决全局对象或者全局对象方法编译不足的情况，只会对es6的语法进行转换，而不会对新api进行转换
+  "plugins": ["transform-runtime"],
+  //在生成的文件中，不产生注释
+  "comments": false,
+  "env": {
+    // test 是提前设置的环境变量，如果没有设置BABEL_ENV则使用NODE_ENV，如果都没有设置默认就是development
+    "test": {
+      "presets": ["env", "stage-2"],
+      //instanbul是一个用来测试转码后代码的工具
+      "plugins": ["istanbul"]
+    }
+  }
+}
