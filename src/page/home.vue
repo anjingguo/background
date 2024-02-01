@@ -93,38 +93,28 @@ export default {
   },
   computed: {},
   methods: {
-    initData() {
-      setInterval(() => {
-        this.userCount = Math.round(Math.random() * 10)
-        this.orderCount = Math.round(Math.random() * 10)
-        this.adminCount = Math.round(Math.random() * 10)
-        this.allUserCount = Math.round(Math.random() * 10)
-        this.allOrderCount = Math.round(Math.random() * 10)
-        this.allAdminCount = Math.round(Math.random() * 10)
-      }, 500)
+    async initData() {
+      const today = dtime().format('YYYY-MM-DD')
+      Promise.all([
+        userCount(today),
+        orderCount(today),
+        adminDayCount(today),
+        getUserCount(),
+        getOrderCount(),
+        adminCount()
+      ])
+        .then((res) => {
+          this.userCount = res[0].count
+          this.orderCount = res[1].count
+          this.adminCount = res[2].count
+          this.allUserCount = res[3].count
+          this.allOrderCount = res[4].count
+          this.allAdminCount = res[5].count
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-    // async initData() {
-    //   const today = dtime().format('YYYY-MM-DD')
-    //   Promise.all([
-    //     userCount(today),
-    //     orderCount(today),
-    //     adminDayCount(today),
-    //     getUserCount(),
-    //     getOrderCount(),
-    //     adminCount()
-    //   ])
-    //     .then((res) => {
-    //       this.userCount = res[0].count
-    //       this.orderCount = res[1].count
-    //       this.adminCount = res[2].count
-    //       this.allUserCount = res[3].count
-    //       this.allOrderCount = res[4].count
-    //       this.allAdminCount = res[5].count
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    // },
     async getSevenData() {
       const apiArr = [[], [], []]
       this.sevenDay.forEach((item) => {

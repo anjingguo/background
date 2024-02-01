@@ -9,6 +9,7 @@
           router
         >
           <el-menu-item
+            class="bg"
             v-for="item in list"
             :index="item.index"
             v-show="!item.children"
@@ -16,6 +17,7 @@
             ><i :class="item.pic"></i>{{ item.title }}</el-menu-item
           >
           <el-submenu
+            class="bg"
             v-for="item in list"
             :index="item.index"
             v-show="item.children"
@@ -154,4 +156,7 @@ export default {
 .bg {
   background-color: @bgc;
 }
+// .el-menu--dark {
+//   background-color: @bgc;
+// }
 </style>

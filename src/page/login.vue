@@ -21,7 +21,7 @@
           <el-form-item>
             <el-button
               type="primary"
-              @click="submitForm(loginForm)"
+              @click="submitForm('loginForm')"
               class="submit_btn"
               >登录</el-button
             >
@@ -66,62 +66,62 @@ export default {
   },
   methods: {
     ...mapActions(['getAdminData']),
-    submitForm(formName) {
-      let reg = /^[a-z0-9]{1,10}$/
-      //对用户名进行校验(只能使用小写字母和数字构成的不长于10位的字符串)
-      if (!formName.username || !reg.test(formName.username)) {
-        this.$notify.error({
-          title: '错误',
-          message: '请输入正确格式的用户名',
-          offset: 100
-        })
-        return false
-      }
-      //对密码进行校验(只能使用小写字母和数字构成的不长于10位的字符串)
-      if (!formName.password || !reg.test(formName.password)) {
-        this.$notify.error({
-          title: '错误',
-          message: '请输入正确格式的密码',
-          offset: 100
-        })
-        return false
-      }
-      this.$message({
-        type: 'success',
-        message: '登录成功'
-      })
-      this.$router.push('manage')
-    }
-    // async submitForm(formName) {
-    //   this.$refs[formName].validate(async (valid) => {
-    //     console.log(this.loginForm.username)
-    //     if (valid) {
-    //       const res = await login({
-    //         user_name: this.loginForm.username,
-    //         password: this.loginForm.password
-    //       })
-    //       if (res.status == 1) {
-    //         this.$message({
-    //           type: 'success',
-    //           message: '登录成功'
-    //         })
-    //         this.$router.push('manage')
-    //       } else {
-    //         this.$message({
-    //           type: 'error',
-    //           message: res.message
-    //         })
-    //       }
-    //     } else {
-    //       this.$notify.error({
-    //         title: '错误',
-    //         message: '请输入正确的用户名密码',
-    //         offset: 100
-    //       })
-    //       return false
-    //     }
+    // submitForm(formName) {
+    //   let reg = /^[a-z0-9]{1,10}$/
+    //   //对用户名进行校验(只能使用小写字母和数字构成的不长于10位的字符串)
+    //   if (!formName.username || !reg.test(formName.username)) {
+    //     this.$notify.error({
+    //       title: '错误',
+    //       message: '请输入正确格式的用户名',
+    //       offset: 100
+    //     })
+    //     return false
+    //   }
+    //   //对密码进行校验(只能使用小写字母和数字构成的不长于10位的字符串)
+    //   if (!formName.password || !reg.test(formName.password)) {
+    //     this.$notify.error({
+    //       title: '错误',
+    //       message: '请输入正确格式的密码',
+    //       offset: 100
+    //     })
+    //     return false
+    //   }
+    //   this.$message({
+    //     type: 'success',
+    //     message: '登录成功'
     //   })
+    //   this.$router.push('manage')
     // }
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        console.log(this.loginForm.username)
+        if (valid) {
+          const res = await login({
+            user_name: this.loginForm.username,
+            password: this.loginForm.password
+          })
+          if (res.status == 1) {
+            this.$message({
+              type: 'success',
+              message: '登录成功'
+            })
+            this.$router.push('manage')
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+          }
+        } else {
+          this.$notify.error({
+            title: '错误',
+            message: '请输入正确的用户名密码',
+            offset: 100
+          })
+          return false
+        }
+      })
+    }
   },
   watch: {
     adminInfo: function (newValue) {
@@ -139,9 +139,7 @@ export default {
 
 <style lang="less" scoped>
 @import '../style/mixin';
-// .login_page {
-//   background-color: #324057;
-// }
+
 .manage_tip {
   position: absolute;
   width: 100%;
