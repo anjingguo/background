@@ -1,17 +1,15 @@
 var path = require('path')
 var config = require('../config')
-var ExtractTextPlugin = require('extract-text-webpack-plugin') //抽离css样式防止将样式打包在js中引起页面加载错乱
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 exports.assetsPath = function (_path) {
-  //assetsSubDirectory为manage文件夹
   var assetsSubDirectory =
     process.env.NODE_ENV === 'production'
       ? config.build.assetsSubDirectory
       : config.dev.assetsSubDirectory
-  return path.posix.join(assetsSubDirectory, _path) // path.join返回绝对路径（在电脑上的实际位置）；path.posix.join返回相对路径
+  return path.posix.join(assetsSubDirectory, _path)
 }
 
-//用于加载.vue文件中的样式
 exports.cssLoaders = function (options) {
   options = options || {}
 
@@ -23,7 +21,6 @@ exports.cssLoaders = function (options) {
     }
   }
 
-  //生成加载器字符串，用于提取文本插件
   function generateLoaders(loader, loaderOptions) {
     var loaders = [cssLoader]
     if (loader) {
@@ -35,8 +32,6 @@ exports.cssLoaders = function (options) {
       })
     }
 
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
@@ -47,7 +42,6 @@ exports.cssLoaders = function (options) {
     }
   }
 
-  // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
@@ -59,7 +53,6 @@ exports.cssLoaders = function (options) {
   }
 }
 
-//用于加载不在.vue文件中的单独存在的样式文件
 exports.styleLoaders = function (options) {
   var output = []
   var loaders = exports.cssLoaders(options)
