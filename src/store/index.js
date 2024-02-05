@@ -21,8 +21,12 @@ const actions = {
 }
 const state = {
   adminInfo: {
-    username: JSON.parse(getStore('user')).username,
-    password: JSON.parse(getStore('user')).password,
+    username: JSON.parse(getStore('user'))
+      ? JSON.parse(getStore('user')).username
+      : '',
+    password: JSON.parse(getStore('user'))
+      ? JSON.parse(getStore('user')).password
+      : '',
     avatar: 'default.jpg'
   }
 }

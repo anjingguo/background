@@ -47,7 +47,7 @@ export default {
       } else if (command == 'signout') {
         const res = await signout()
         if (res.status == 1) {
-          removeStore(user)
+          removeStore('user')
           this.saveAdminInfo({ username: '', password: '' })
           this.$message({
             type: 'success',

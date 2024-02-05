@@ -12,19 +12,17 @@ export default {
   },
   mounted() {
     this.initData()
-    this.loading = false //加在这是一直加载
   },
   methods: {
     async initData() {
       try {
         const res = await getUserCity()
-
         if (res.status == 1) {
           this.pieData = res.user_city
         } else {
           throw new Error(res)
         }
-        this.loading = false //加在这是不加载
+        this.loading = false
       } catch (err) {
         console.log('获取用户分布信息失败', err)
       }

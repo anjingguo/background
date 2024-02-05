@@ -42,6 +42,8 @@
           </template>
         </el-table-column>
         <el-table-column label="食品名称" prop="name"> </el-table-column>
+        <el-table-column label="食品ID" prop="item_id"> </el-table-column>
+        <el-table-column label="月销量" prop="month_sales"> </el-table-column>
         <el-table-column label="食品介绍" prop="description"> </el-table-column>
         <el-table-column label="评分" prop="rating"> </el-table-column>
         <el-table-column label="操作" width="160">
@@ -171,8 +173,7 @@
     </div>
   </div>
 </template>
-
-<script src="../controller/foodList.js"></script>
+<script src="../controller/foodList"></script>
 
 <style lang="less">
 @import '../style/foodList';
