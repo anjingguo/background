@@ -2,9 +2,11 @@
   <div class="header_container">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">{{
-        item
-      }}</el-breadcrumb-item>
+      <el-breadcrumb-item
+        v-for="(item, index) in $route.meta.meta"
+        :key="index"
+        >{{ item }}</el-breadcrumb-item
+      >
     </el-breadcrumb>
     <el-dropdown @command="handleCommand" menu-align="start">
       <img :src="baseImgPath + adminInfo.avatar" class="avator" />
@@ -48,7 +50,7 @@ export default {
         const res = await signout()
         if (res.status == 1) {
           removeStore('user')
-          this.saveAdminInfo({ username: '', password: '' })
+          this.saveAdminInfo({ user_name: '' })
           this.$message({
             type: 'success',
             message: '退出成功'

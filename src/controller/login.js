@@ -1,6 +1,6 @@
 import { login } from '@/api/getData'
-import { mapActions, mapState } from 'vuex'
-import { setStore } from '@/config/mUtils.js'
+import { mapActions, mapState, mapMutations } from 'vuex'
+import { setStore, getStore } from '@/config/mUtils.js'
 
 export default {
   data() {
@@ -20,22 +20,18 @@ export default {
   },
   mounted() {
     this.showLogin = true
-    if (this.adminInfo.username) {
+    if (getStore('user')) {
       this.$router.push('manage')
-      return
-    }
-    if (!this.adminInfo.id) {
-      this.getAdminData()
     }
   },
   computed: {
     ...mapState(['adminInfo'])
   },
   methods: {
+    ...mapMutations(['saveAdminInfo']),
     ...mapActions(['getAdminData']),
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
-        console.log(this.loginForm.username)
         if (valid) {
           const res = await login({
             user_name: this.loginForm.username,
@@ -46,11 +42,11 @@ export default {
               type: 'success',
               message: '登录成功'
             })
-            this.$router.push('manage')
             setStore('user', {
               username: this.loginForm.username,
               password: this.loginForm.password
             })
+            this.$router.push('manage')
           } else {
             this.$message({
               type: 'error',

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getAdminInfo } from '@/api/getData'
-import { getStore } from '@/config/mUtils.js'
 
 Vue.use(Vuex)
 
@@ -21,19 +20,14 @@ const actions = {
 }
 const state = {
   adminInfo: {
-    username: JSON.parse(getStore('user'))
-      ? JSON.parse(getStore('user')).username
-      : '',
-    password: JSON.parse(getStore('user'))
-      ? JSON.parse(getStore('user')).password
-      : '',
+    username: '',
+    password: '',
     avatar: 'default.jpg'
   }
 }
 const mutations = {
-  saveAdminInfo(state, { username, password }) {
-    state.adminInfo.username = username
-    state.adminInfo.password = password
+  saveAdminInfo(state, obj) {
+    state.adminInfo.username = obj.user_name
   }
 }
 export default new Vuex.Store({
